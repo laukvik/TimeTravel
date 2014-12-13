@@ -24,11 +24,15 @@ import org.junit.Test;
  */
 public class TimeTravelServiceIT {
 
+    private TimeTravelSingleton srv;
+
     public TimeTravelServiceIT() {
+        srv = TimeTravelSingleton.getInstance();
     }
 
     @Test
-    public void testSomeMethod() {
+    public void createUser() {
+        srv.createUser("morten@laukvik.no", "123", UserType.NORMAL);
     }
 
 }

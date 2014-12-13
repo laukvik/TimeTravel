@@ -16,40 +16,24 @@
  */
 package org.laukvik.timetravel;
 
-import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ejb.PostActivate;
+import javax.ejb.Singleton;
 
 /**
  *
  * @author Morten Laukvik <morten@laukvik.no>
  */
-@Named(value = "eventBean")
-@SessionScoped
-@Path("/events")
-public class EventBean implements Serializable {
+@Singleton
+@javax.ejb.Startup
+public class Startup {
 
     @EJB
-    TimeTravelFacade srv;
+    private TimeTravelFacade facade;
 
-    /**
-     * Creates a new instance of EventBean
-     */
-    public EventBean() {
-    }
-
-    @GET
-    @Path("/get")
-    @Produces({"application/json"})
-    public Event getEvent() {
-        Event prod = new Event();
-        prod.setTitle("Mattress");
-        prod.setDescription("Queen size mattress");
-        return prod;
+    @PostActivate
+    public void createDefaults() {
+        facade.createUser("morten@laukvik.no", "123", UserType.MASTER);
     }
 
 }

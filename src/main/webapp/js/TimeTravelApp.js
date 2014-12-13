@@ -23,7 +23,12 @@ angular.module("timeTravelApp", [])
 
             $scope.selectTag = function (tag, item) {
 //                item.className += " active";
-                alert(item.innerHtml);
+            };
+
+            $scope.selectEra = function (era, item) {
+            };
+
+            $scope.selectGeo = function (geo, item) {
             };
 
             $http.get('json/events.json')
@@ -37,5 +42,9 @@ angular.module("timeTravelApp", [])
             $http.get('json/tags.json')
                     .then(function (res) {
                         $scope.tagsJson = res.data;
+                    });
+            $http.get('json/eras.json')
+                    .then(function (res) {
+                        $scope.erasJson = res.data;
                     });
         });

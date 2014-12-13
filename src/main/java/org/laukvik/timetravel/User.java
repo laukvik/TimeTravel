@@ -34,6 +34,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -44,6 +45,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 })
 @Table(name = "Users")
+@XmlRootElement
 public class User implements Serializable {
 
     @Id

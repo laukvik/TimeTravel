@@ -1,0 +1,16 @@
+{
+    "eras": [
+        {
+            "id": "2",
+            "title": "Europe",
+            "count": 2
+        }
+        ,
+        {
+            "id": "2",
+            "title": "Middle Ages",
+            "count": 3
+        }
+    ]
+
+}

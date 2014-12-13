@@ -16,35 +16,36 @@
  */
 package org.laukvik.timetravel;
 
-import java.io.Serializable;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import javax.persistence.Persistence;
 
 /**
  *
  * @author Morten Laukvik <morten@laukvik.no>
  */
-@Stateless
-public class TimeTravelService implements Serializable {
+public class TimeTravelSingleton {
 
-    private static final Logger LOG = LogManager.getLogger("TimeTravel");
+    private final static class LOCK {
+        static final TimeTravelSingleton INSTANCE = new TimeTravelSingleton();
+    }
 
-    @PersistenceContext(unitName = "TimeTravelPU")
-    private EntityManager em;
+    public final static TimeTravelSingleton getInstance() {
+        return LOCK.INSTANCE;
+    }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public User createUser(String email, String password) {
-        LOG.info("Creating new user with email {0} and password {1} ", email, password);
+    private final EntityManager em;
+
+    private TimeTravelSingleton() {
+        em = Persistence.createEntityManagerFactory("TimeTravelPU").createEntityManager();
+    }
+
+    public void createUser(String email, String password, UserType type) {
+        em.getTransaction().begin();
         User u = new User();
         u.setEmail(email);
         u.setPassword(password);
-        em.persist(u);
-        return u;
+        u.setType(type);
+        em.getTransaction().commit();
     }
 
 

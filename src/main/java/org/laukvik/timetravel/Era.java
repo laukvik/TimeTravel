@@ -22,8 +22,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
 import javax.persistence.Version;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class Tag implements Serializable {
+public class Era implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,34 +42,17 @@ public class Tag implements Serializable {
     @Version
     private int version;
 
-    @ManyToOne
-    private User author;
+    private long fromYear;
+    private long toYear;
 
+    @XmlElement(required = true)
+    @Lob
     private String title;
-
-    public Tag() {
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -80,13 +64,44 @@ public class Tag implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Tag other = (Tag) obj;
+        final Era other = (Era) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public long getFromYear() {
+        return fromYear;
+    }
+
+    public void setFromYear(long fromYear) {
+        this.fromYear = fromYear;
+    }
+
+    public long getToYear() {
+        return toYear;
+    }
+
+    public void setToYear(long toYear) {
+        this.toYear = toYear;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
 
 }

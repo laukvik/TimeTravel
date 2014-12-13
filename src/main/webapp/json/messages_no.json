@@ -11,5 +11,7 @@
     "year": "År",
     "time_from": "Fra",
     "time_to": "Til",
+    "era": "Tidsepoke",
+    "tag": "Etikett",
     "developer": "Morten Laukvik <morten@laukvik.no>"
 }

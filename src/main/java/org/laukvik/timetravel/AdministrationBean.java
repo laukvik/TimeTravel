@@ -32,7 +32,7 @@ import javax.inject.Named;
 public class AdministrationBean implements Serializable {
 
     @EJB
-    TimeTravelService srv;
+    TimeTravelFacade srv;
 
     String username;
     String password;
