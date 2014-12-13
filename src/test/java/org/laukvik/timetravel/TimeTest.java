@@ -16,8 +16,8 @@
  */
 package org.laukvik.timetravel;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
-import static org.laukvik.timetravel.Time.JANUARY;
 
 /**
  *
@@ -31,33 +31,34 @@ public class TimeTest {
     @Test
     public void testFullTime() {
         Time time = Time.at(5).october(2014);
-        assert (time.day == 5);
-        assert (time.month == Time.OCTOBER);
-        assert (time.year == 2014);
+        assertThat(time.day).isEqualTo(5);
+        assertThat(time.month).isEqualTo(Time.OCTOBER);
+        assertThat(time.year).isEqualTo(2014);
+
     }
 
     @Test
     public void testYear() {
         Time time = Time.year(2014);
-        assert (time.day == null);
-        assert (time.month == null);
-        assert (time.year == 2014);
+        assertThat(time.day).isNull();
+        assertThat(time.month).isNull();
+        assertThat(time.year).isEqualTo(2014);
     }
 
     @Test
     public void testDateMonth() {
         Time time = Time.at(5).october();
-        assert (time.day == 5);
-        assert (time.month == Time.OCTOBER);
-        assert (time.year == null);
+        assertThat(time.day).isEqualTo(5);
+        assertThat(time.month).isEqualTo(Time.OCTOBER);
+        assertThat(time.year).isNull();
     }
 
     @Test
     public void testMonthYear() {
-        Time time = Time.in(JANUARY, 2014);
-        assert (time.day == null);
-        assert (time.month == Time.JANUARY);
-        assert (time.year == 2014);
+        Time time = Time.in(Time.JANUARY, 2014);
+        assertThat(time.day).isNull();
+        assertThat(time.month).isEqualTo(Time.JANUARY);
+        assertThat(time.year).isEqualTo(2014);
     }
 
 
