@@ -92,7 +92,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div class="form-group">
                             <h4>{{messages.tag}}</h4>
                             <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="tag in tagsJson.tags" ng-click="selectTag(tag, this)">
+                                <li class="list-group-item" ng-repeat="tag in tagsJson" ng-click="selectTag(tag, this)">
                                     <span class="badge">{{tag.count}}</span>
                                     <span>{{tag.title}}</span>
                                 </li>
@@ -101,7 +101,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                             <h4>{{messages.era}}</h4>
                             <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="era in erasJson.eras" ng-click="selectEra(era, this)">
+                                <li class="list-group-item" ng-repeat="era in erasJson" ng-click="selectEra(era, this)">
                                     <span class="badge">{{era.count}}</span>
                                     <span>{{era.title}}</span>
                                 </li>
@@ -120,7 +120,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="e in eventsJson.events">
+                                <tr ng-repeat="e in eventsJson">
                                     <td>{{e.time}}</td>
                                     <td>
                                         {{e.title}}
@@ -131,7 +131,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </table>
                     </div>
                     <div class="row" ng-if="eventViewMode == 1">
-                        <div class="col-sm-6 col-md-4" ng-repeat="e in eventsJson.events">
+                        <div class="col-sm-6 col-md-4" ng-repeat="e in eventsJson">
                             <div class="thumbnail">
                                 <div class="caption" style="height: 300px; overflow-y: hidden">
                                     <h3>{{e.title}}<br><small>{{e.time}}</small></h3>

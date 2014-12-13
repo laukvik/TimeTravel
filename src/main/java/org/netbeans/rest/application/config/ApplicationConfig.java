@@ -40,11 +40,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(org.laukvik.timetravel.EventBean.class);
-        resources.add(service.EraFacadeREST.class);
-        resources.add(service.EventFacadeREST.class);
-        resources.add(service.TagFacadeREST.class);
-        resources.add(service.UserFacadeREST.class);
+        resources.add(org.laukvik.timetravel.RestBean.class);
     }
 
 }

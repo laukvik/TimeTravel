@@ -22,6 +22,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.persistence.Embeddable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -38,6 +41,8 @@ import javax.persistence.Embeddable;
  * @author Morten Laukvik <morten@laukvik.no>
  */
 @Embeddable
+@XmlRootElement(name = "event")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Time implements Serializable {
 
     public static int JANUARY = java.util.Calendar.JANUARY;

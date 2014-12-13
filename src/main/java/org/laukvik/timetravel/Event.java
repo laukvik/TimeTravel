@@ -71,6 +71,14 @@ public class Event implements Serializable {
     @Lob
     private String description;
 
+    @XmlElement(required = true)
+    @Lob
+    private String photo;
+
+    @XmlElement(required = true)
+    @Lob
+    private String wiki;
+
     @ManyToOne
     private User author;
 
@@ -153,6 +161,22 @@ public class Event implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getWiki() {
+        return wiki;
+    }
+
+    public void setWiki(String wiki) {
+        this.wiki = wiki;
     }
 
 

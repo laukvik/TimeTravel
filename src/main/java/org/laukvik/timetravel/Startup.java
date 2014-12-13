@@ -25,7 +25,6 @@ import javax.ejb.Singleton;
  * @author Morten Laukvik <morten@laukvik.no>
  */
 @Singleton
-@javax.ejb.Startup
 public class Startup {
 
     @EJB

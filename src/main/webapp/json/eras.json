@@ -1,33 +1,31 @@
-{
-    "eras": [
-        {
-            "id": "2",
-            "title": "Classical antiquity",
-            "from": -700,
-            "to": 600,
-            "url": null,
-            "count": 2
-        }
-        ,
-        {
-            "id": "2",
-            "title": "Middle Ages",
-            "from": 500,
-            "to": 1500,
-            "url": null,
-            "count": 2
-        }
-        ,
-        {
-            "id": "2",
-            "title": "Early modern period",
-            "from": 1450,
-            "to": 1750,
-            "url": "http://en.wikipedia.org/wiki/Early_modern_Europe",
-            "count": 2
-        }
+[
+    {
+        "id": "2",
+        "title": "Classical antiquity",
+        "from": -700,
+        "to": 600,
+        "url": null,
+        "count": 2
+    }
+    ,
+    {
+        "id": "2",
+        "title": "Middle Ages",
+        "from": 500,
+        "to": 1500,
+        "url": null,
+        "count": 2
+    }
+    ,
+    {
+        "id": "2",
+        "title": "Early modern period",
+        "from": 1450,
+        "to": 1750,
+        "url": "http://en.wikipedia.org/wiki/Early_modern_Europe",
+        "count": 2
+    }
 
 
-    ]
+]
 
-}

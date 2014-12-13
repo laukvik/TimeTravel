@@ -20,6 +20,21 @@ angular.module("timeTravelApp", [])
             $scope.eventToYear = null;
             $scope.eventViewMode = 1;
             $scope.selectedTags = null;
+            $scope.developerMode = false;
+
+            var EVENTS_URL_JSON = "json/events.json";
+            var EVENTS_URL_REST = "webresources/events/findevents";
+
+            var TAGS_URL_JSON = "json/tags.json";
+            var TAGS_URL_REST = "webresources/events/findtags";
+
+            var ERAS_URL_JSON = "json/eras.json";
+            var ERAS_URL_REST = "webresources/events/finderas";
+
+            EVENTS_URL = $scope.developerMode ? EVENTS_URL_JSON : EVENTS_URL_REST;
+            TAGS_URL = $scope.developerMode ? TAGS_URL_JSON : TAGS_URL_REST;
+            ERAS_URL = $scope.developerMode ? ERAS_URL_JSON : ERAS_URL_REST;
+
 
             $scope.selectTag = function (tag, item) {
 //                item.className += " active";
@@ -31,19 +46,22 @@ angular.module("timeTravelApp", [])
             $scope.selectGeo = function (geo, item) {
             };
 
-            $http.get('json/events.json')
-                    .then(function (res) {
-                        $scope.eventsJson = res.data;
-                    });
             $http.get('json/messages_no.json')
                     .then(function (res) {
                         $scope.messages = res.data;
                     });
-            $http.get('json/tags.json')
+
+            $http.get(EVENTS_URL)
+                    .then(function (res) {
+                        $scope.eventsJson = res.data;
+                    });
+
+            $http.get(TAGS_URL)
                     .then(function (res) {
                         $scope.tagsJson = res.data;
                     });
-            $http.get('json/eras.json')
+
+            $http.get(ERAS_URL)
                     .then(function (res) {
                         $scope.erasJson = res.data;
                     });

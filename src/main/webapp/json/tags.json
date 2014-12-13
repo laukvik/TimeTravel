@@ -1,26 +1,25 @@
-{
-    "tags": [
-        {
-            "id": "2",
-            "title": "Bhuddism",
-            "count": 2
-        },
-        {
-            "id": "1",
-            "title": "Christianity",
-            "count": 3
-        }
-        ,
-        {
-            "id": "3",
-            "title": "Hinduism",
-            "count": 1
-        },
-        {
-            "id": "4",
-            "title": "Islam",
-            "count": 5
-        }
-    ]
 
-}
+[
+    {
+        "id": "2",
+        "title": "Bhuddism",
+        "count": 2
+    },
+    {
+        "id": "1",
+        "title": "Christianity",
+        "count": 3
+    }
+    ,
+    {
+        "id": "3",
+        "title": "Hinduism",
+        "count": 1
+    },
+    {
+        "id": "4",
+        "title": "Islam",
+        "count": 5
+    }
+]
+

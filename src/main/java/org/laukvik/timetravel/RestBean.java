@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -30,10 +30,10 @@ import javax.ws.rs.Produces;
  *
  * @author Morten Laukvik <morten@laukvik.no>
  */
-@Named(value = "eventBean")
-@SessionScoped
+@Named(value = "restBean")
+@Stateless
 @Path("/events")
-public class EventBean implements Serializable {
+public class RestBean implements Serializable {
 
     @EJB
     TimeTravelFacade srv;
@@ -41,7 +41,7 @@ public class EventBean implements Serializable {
     /**
      * Creates a new instance of EventBean
      */
-    public EventBean() {
+    public RestBean() {
     }
 
     @GET
@@ -55,20 +55,60 @@ public class EventBean implements Serializable {
     }
 
     @GET
-    @Path("/findall")
+    @Path("/findevents")
     @Produces({"application/json"})
     public List<Event> findEvents() {
         List<Event> items = new ArrayList<>();
         {
             Event evt = new Event();
+            evt.setTime(Time.year(1972));
             evt.setTitle("Mattress");
             evt.setDescription("Queen size mattress");
+            evt.setPhoto("http://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Robert_Dinwiddie_from_NPG.jpg/600px-Robert_Dinwiddie_from_NPG.jpg");
             items.add(evt);
         }
         {
             Event evt = new Event();
+            evt.setTime(Time.year(2005));
             evt.setTitle("Mattress");
             evt.setDescription("Queen size mattress");
+            evt.setPhoto("http://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg/440px-Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg");
+            items.add(evt);
+        }
+        return items;
+    }
+
+    @GET
+    @Path("/findtags")
+    @Produces({"application/json"})
+    public List<Tag> findTags() {
+        List<Tag> items = new ArrayList<>();
+        {
+            Tag evt = new Tag();
+            evt.setTitle("Mattress");
+            items.add(evt);
+        }
+        {
+            Tag evt = new Tag();
+            evt.setTitle("Mattress");
+            items.add(evt);
+        }
+        return items;
+    }
+
+    @GET
+    @Path("/finderas")
+    @Produces({"application/json"})
+    public List<Era> findEras() {
+        List<Era> items = new ArrayList<>();
+        {
+            Era evt = new Era();
+            evt.setTitle("Mattress");
+            items.add(evt);
+        }
+        {
+            Era evt = new Era();
+            evt.setTitle("Mattress");
             items.add(evt);
         }
         return items;
