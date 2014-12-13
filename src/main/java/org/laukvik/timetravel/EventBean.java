@@ -17,6 +17,8 @@
 package org.laukvik.timetravel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -50,6 +52,26 @@ public class EventBean implements Serializable {
         prod.setTitle("Mattress");
         prod.setDescription("Queen size mattress");
         return prod;
+    }
+
+    @GET
+    @Path("/findall")
+    @Produces({"application/json"})
+    public List<Event> findEvents() {
+        List<Event> items = new ArrayList<>();
+        {
+            Event evt = new Event();
+            evt.setTitle("Mattress");
+            evt.setDescription("Queen size mattress");
+            items.add(evt);
+        }
+        {
+            Event evt = new Event();
+            evt.setTitle("Mattress");
+            evt.setDescription("Queen size mattress");
+            items.add(evt);
+        }
+        return items;
     }
 
 }

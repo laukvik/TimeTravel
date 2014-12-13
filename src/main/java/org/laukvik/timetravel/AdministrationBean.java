@@ -49,7 +49,18 @@ public class AdministrationBean implements Serializable {
     }
 
     public String createUser() {
-        srv.createUser(username, password);
+        User u = srv.createUser(username, password, UserType.MASTER);
+        Tag t1 = srv.createTag("Bhuddism");
+        Tag t2 = srv.createTag("Christianity");
+        Tag t3 = srv.createTag("Hinduism");
+        Tag t4 = srv.createTag("Islam");
+
+        Era e1 = srv.createEra("Classical antiquity", -700, 600);
+        Era e2 = srv.createEra("Middle Ages", 500, 1000);
+        Era e3 = srv.createEra("Early modern period", 1450, 1750);
+
+        Event ev1 = srv.createEvent("Robert Dinwiddie", Time.year(1693), "Robert Dinwiddie (1693 – 27 July 1770) was a British colonial administrator who served as lieutenant governor of colonial Virginia from 1751 to 1758, first under Governor Willem Anne van Keppel, 2nd Earl of Albemarle, and then, from July 1756 to January 1758, as deputy for John Campbell, 4th Earl of Loudoun. Since the governors at that time were largely absentee, he was the de facto.", t1);
+
         return "./administration/?faces-redirect=true";
     }
 
