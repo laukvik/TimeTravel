@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="TimeTravel" packages="">
+    <Appenders>
+        <File name="appFile" fileName="logs/app.log">
+            <PatternLayout>
+                <Pattern>%d{HH:mm} %p %c{1} %m%n</Pattern>
+            </PatternLayout>
+        </File>
+        <Async name="Async">
+            <AppenderRef ref="appFile"/>
+        </Async>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Async"/>
+        </Root>
+    </Loggers>
+</Configuration>
