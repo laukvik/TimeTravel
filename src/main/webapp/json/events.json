@@ -1,11 +1,10 @@
 {
     "events": [
         {
-            "title": "Jean-Pierre Blanchard",
-            "description": "Blanchard made his first successful balloon flight in Paris on 2 March 1784, in a hydrogen gas balloon launched from the Champ de Mars. The first successful manned balloon flight had taken place on 21 November 1783, when Pilâtre de Rozier and the Marquis d'Arlandes took off at Palace of Versailles in a free-flying hot air balloon constructed by the Montgolfier brothers. The first manned hydrogen balloon flight had taken place on December 1, 1783, when Professor Jacques Charles and Nicolas-Louis Robert launched La Charlière from the Jardin des Tuileries in Paris. Blanchard's flight nearly ended in disaster, when one spectator (Dupont de Chambon, a contemporary of Napoleon at the École militaire de Brienne) slashed at the balloon's mooring ropes and oars with his sword after being refused a place on board. Blanchard intended to 'row' northeast to La Villette[disambiguation needed] but the balloon was pushed by the wind across the Seine to Billancourt and back again, landing in the rue de Sèvres. Blanchard adopted the Latin tag Sic itur ad astra as his motto.",
-            "time": "1972-10-05",
-            "photo": "http://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Jean_Pierre_Blanchard.jpg/400px-Jean_Pierre_Blanchard.jpg",
-            "url": "http://en.wikipedia.org/wiki/Jean-Pierre_Blanchard"
+            "title": "Robert Dinwiddie",
+            "description": "Robert Dinwiddie (1693 – 27 July 1770) was a British colonial administrator who served as lieutenant governor of colonial Virginia from 1751 to 1758, first under Governor Willem Anne van Keppel, 2nd Earl of Albemarle, and then, from July 1756 to January 1758, as deputy for John Campbell, 4th Earl of Loudoun. Since the governors at that time were largely absentee, he was the de facto head of the colony for much of the time.",
+            "time": "1693-00-00",
+            "url": ""
         },
         {
             "title": "George Washington",
@@ -15,18 +14,21 @@
             "url": "http://en.wikipedia.org/wiki/George_Washington"
         },
         {
-            "title": "Robert Dinwiddie",
-            "description": "Robert Dinwiddie (1693 – 27 July 1770) was a British colonial administrator who served as lieutenant governor of colonial Virginia from 1751 to 1758, first under Governor Willem Anne van Keppel, 2nd Earl of Albemarle, and then, from July 1756 to January 1758, as deputy for John Campbell, 4th Earl of Loudoun. Since the governors at that time were largely absentee, he was the de facto head of the colony for much of the time.",
-            "time": "1693-00-00",
-            "url": ""
-        }
-        ,
-        {
             "title": "Leopold II, Holy Roman Emperor",
             "description": "Leopold II (German: Peter Leopold Josef Anton Joachim Pius Gotthard; Italian: Pietro Leopoldo Giuseppe Antonio Gioacchino Pio Gottardo; English: Peter Leopold Joseph Anton Joachim Pius Gotthard; 5 May 1747 – 1 March 1792), was Holy Roman Emperor and King of Hungary and Bohemia from 1790 to 1792, Archduke of Austria and Grand Duke of Tuscany from 1765 to 1790. He was a son of Emperor Francis I and his wife, Empress Maria Theresa, thus the brother of Marie Antoinette. Leopold was a moderate proponent of enlightened absolutism.[1]",
             "time": "1747-05-05",
             "url": ""
+        },
+        {
+            "title": "Jean-Pierre Blanchard",
+            "description": "Blanchard made his first successful balloon flight in Paris on 2 March 1784, in a hydrogen gas balloon launched from the Champ de Mars. The first successful manned balloon flight had taken place on 21 November 1783, when Pilâtre de Rozier and the Marquis d'Arlandes took off at Palace of Versailles in a free-flying hot air balloon constructed by the Montgolfier brothers. The first manned hydrogen balloon flight had taken place on December 1, 1783, when Professor Jacques Charles and Nicolas-Louis Robert launched La Charlière from the Jardin des Tuileries in Paris. Blanchard's flight nearly ended in disaster, when one spectator (Dupont de Chambon, a contemporary of Napoleon at the École militaire de Brienne) slashed at the balloon's mooring ropes and oars with his sword after being refused a place on board. Blanchard intended to 'row' northeast to La Villette[disambiguation needed] but the balloon was pushed by the wind across the Seine to Billancourt and back again, landing in the rue de Sèvres. Blanchard adopted the Latin tag Sic itur ad astra as his motto.",
+            "time": "1753-07-04",
+            "photo": "http://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Jean_Pierre_Blanchard.jpg/400px-Jean_Pierre_Blanchard.jpg",
+            "url": "http://en.wikipedia.org/wiki/Jean-Pierre_Blanchard"
         }
+
+
+
     ]
 
 }

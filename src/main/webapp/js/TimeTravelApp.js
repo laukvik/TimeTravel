@@ -18,7 +18,14 @@ angular.module("timeTravelApp", [])
         .controller('timeController', function ($scope, $http) {
             $scope.eventFromYear = null;
             $scope.eventToYear = null;
-            $scope.eventDetailsMode = false;
+            $scope.eventViewMode = 1;
+            $scope.selectedTags = null;
+
+            $scope.selectTag = function (tag, item) {
+//                item.className += " active";
+                alert(item.innerHtml);
+            };
+
             $http.get('json/events.json')
                     .then(function (res) {
                         $scope.eventsJson = res.data;
@@ -26,5 +33,9 @@ angular.module("timeTravelApp", [])
             $http.get('json/messages_no.json')
                     .then(function (res) {
                         $scope.messages = res.data;
+                    });
+            $http.get('json/tags.json')
+                    .then(function (res) {
+                        $scope.tagsJson = res.data;
                     });
         });

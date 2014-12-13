@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html>
     <head>
-        <title>Dashboard</title>
+        <title>TimeTravel</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Latest compiled and minified CSS -->
@@ -71,19 +71,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <input type="number" class="form-control" id="exampleInputPassword2" placeholder="{{messages.year}}" ng-value="eventToYear">
                             </div>
                         </div>
+                        <div class="form-group" style="display: none;">
+                            <button type="submit" class="btn btn-default">Søk</button>
+                        </div>
                         <div class="form-group">
                             <div class="input-group">
-                                Details photo
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <div class="radio">
+                                        <label><input type="radio" ng-model="eventViewMode" name="eventViewMode" value="0">{{messages.event_view_mode_list}}</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" ng-model="eventViewMode" name="eventViewMode" value="1">{{messages.event_view_mode_poster}}</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-default">Søk</button>
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="tag in tagsJson.tags" ng-click="selectTag(tag, this)">
+                                    <span class="badge">{{tag.count}}</span>
+                                    <span>{{tag.title}}</span>
+                                </li>
+                            </ul>
                         </div>
+
                     </form>
 
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <div class="table-responsive" ng-if="eventDetailsMode">
+                    <div class="table-responsive" ng-if="eventViewMode == 0">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -96,22 +112,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     <td>{{e.time}}</td>
                                     <td>
                                         {{e.title}}
-
                                         <a ng-if="e.url != ''" classes ="btn btn-default small" href="{{e.url}}" target="_new">Wiki</a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="row">
+                    <div class="row" ng-if="eventViewMode == 1">
                         <div class="col-sm-6 col-md-4" ng-repeat="e in eventsJson.events">
                             <div class="thumbnail">
-                                <div class="caption">
-                                    <h3><small>{{e.time}}</small><br>{{e.title}}</h3>
-                                    <div style="height: 200px; overflow-y: hidden">
+                                <div class="caption" style="height: 300px; overflow-y: hidden">
+                                    <h3>{{e.title}}<br><small>{{e.time}}</small></h3>
+                                    <div>
                                         <p><img ng-if="e.photo != ''" src="{{e.photo}}" width="100" align="right" style="margin-left: 0.5em;"> {{e.description}}</p>
                                     </div>
-                                    <p><a ng-if="e.url != ''" target="_new" href="{{e.url}}" class="btn btn-primary" role="button">Wiki</a></p>
                                 </div>
                             </div>
                         </div>
