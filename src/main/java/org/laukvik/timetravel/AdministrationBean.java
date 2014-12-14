@@ -17,9 +17,16 @@
 package org.laukvik.timetravel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
+import javax.servlet.http.Part;
 
 /**
  * Enables administration of users and events
@@ -38,11 +45,63 @@ public class AdministrationBean implements Serializable {
     String password;
     Long userid;
 
+    private Part file;
+
     /**
      * Creates a new instance of AdministrationBean
      */
     public AdministrationBean() {
     }
+
+    public String uploadTags() {
+        try {
+            srv.importTags(file.getInputStream());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "tags?faces-redirect=true";
+    }
+
+    public String uploadEvents() {
+        try {
+            srv.importEvents(file.getInputStream());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "events?faces-redirect=true";
+    }
+
+    public String uploadEras() {
+        try {
+            srv.importEras(file.getInputStream());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "eras?faces-redirect=true";
+    }
+
+    public void validateExcelFile(FacesContext ctx, UIComponent comp, Object value) {
+        List<FacesMessage> msgs = new ArrayList<FacesMessage>();
+        Part file = (Part) value;
+        if (file.getSize() > 1024000000) {
+            msgs.add(new FacesMessage("file too big"));
+        }
+//        if (!"application/ms-excel".equals(file.getContentType())) {
+//            msgs.add(new FacesMessage("not a text file"));
+//        }
+        if (!msgs.isEmpty()) {
+            throw new ValidatorException(msgs);
+        }
+    }
+
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
+    }
+
 
     public String open() {
         return "./administration/?faces-redirect=true";

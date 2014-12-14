@@ -61,5 +61,20 @@ public class TimeTest {
         assertThat(time.year).isEqualTo(2014);
     }
 
+    @Test
+    public void parseFullDate() {
+        Time time = Time.parse("1731-02-11");
+        assertThat(time.year).isEqualTo(1731);
+        assertThat(time.month).isEqualTo(2);
+        assertThat(time.day).isEqualTo(11);
+    }
+
+    @Test
+    public void parseYear() {
+        Time time = Time.parse("1731");
+        assertThat(time.year).isEqualTo(1731);
+        assertThat(time.month).isNull();
+        assertThat(time.day).isNull();
+    }
 
 }

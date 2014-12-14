@@ -23,7 +23,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -33,6 +36,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Era.findAll", query = "SELECT e FROM Era e ORDER BY e.title ASC"),
+    @NamedQuery(name = "Era.removeAll", query = "DELETE FROM Era e")
+})
 public class Era implements Serializable {
 
     @Id
@@ -47,7 +54,24 @@ public class Era implements Serializable {
 
     @XmlElement(required = true)
     @Lob
+    @NotNull
     private String title;
+
+    @Lob
+    private String description;
+
+    @Lob
+    private String wiki;
+
+    public Era() {
+    }
+
+    public Era(String title, long fromYear, long toYear) {
+        this.fromYear = fromYear;
+        this.toYear = toYear;
+        this.title = title;
+    }
+
 
     @Override
     public int hashCode() {
@@ -102,6 +126,23 @@ public class Era implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getWiki() {
+        return wiki;
+    }
+
+    public void setWiki(String wiki) {
+        this.wiki = wiki;
+    }
+
 
 
 }

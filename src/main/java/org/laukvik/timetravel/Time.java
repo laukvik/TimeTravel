@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Embeddable
 @XmlRootElement(name = "event")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Time implements Serializable {
 
     public static int JANUARY = java.util.Calendar.JANUARY;
@@ -63,6 +63,44 @@ public class Time implements Serializable {
     Integer day;
 
     public Time() {
+    }
+
+    /**
+     * 1731-02-11
+     * 0123456789
+     *
+     * @param text
+     * @return
+     */
+    public static Time parse(String text) {
+        String[] arr = text.split("-");
+        Integer year = null;
+        try {
+            year = Integer.parseInt(arr[0]);
+        } catch (Exception e) {
+        }
+
+        Integer month = null;
+        try {
+            month = Integer.parseInt(arr[1]);
+        } catch (Exception e) {
+        }
+
+        Integer day = null;
+        try {
+            day = Integer.parseInt(arr[2]);
+        } catch (Exception e) {
+        }
+
+        Time t = new Time();
+        t.year = year;
+        t.month = month;
+        t.day = day;
+        return t;
+    }
+
+    public String getValue() {
+        return year + "-" + month + "-" + day;
     }
 
     public static Time in(int month, int year) {

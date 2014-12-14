@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>TimeTravel</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="http://getbootstrap.com/examples/dashboard/dashboard.css"/>
+    </h:head>
+    <h:body>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"  aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+            </div>
+            <div style="display: block; margin: 0px;" class="navbar-toggle  collapsed">
+                asd
+            </div>
+            <div class="navbar-brand" style="">TimeTravel - Administration</div>
+            <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../index.html" class="">Tilbake</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+
+            <h:form id="form1" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label for="file1">Tags</label>
+                    <h:inputFile class="form-control" required="true" id="file1" value="#{administrationBean.file}" validator="#{administrationBean.validateExcelFile}"/>
+                    <h:commandButton class="btn btn-primary" value="Upload" action="#{administrationBean.uploadTags}"/>
+                    <h:messages />
+                </div>
+            </h:form>
+
+            <h:form id="form2" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file2">Events</label>
+                    <h:inputFile class="form-control" required="true" id="file2" value="#{administrationBean.file}" validator="#{administrationBean.validateExcelFile}"/>
+                    <h:commandButton class="btn btn-primary" value="Upload" action="#{administrationBean.uploadEvents}"/>
+                    <h:messages />
+                </div>
+            </h:form>
+
+            <h:form id="form3" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file2">Eras</label>
+                    <h:inputFile class="form-control" required="true" id="file3" value="#{administrationBean.file}" validator="#{administrationBean.validateExcelFile}"/>
+                    <h:commandButton class="btn btn-primary" value="Upload" action="#{administrationBean.uploadEras()}"/>
+                    <h:messages />
+                </div>
+            </h:form>
+
+        </div>
+
+    </h:body>
+</html>
+

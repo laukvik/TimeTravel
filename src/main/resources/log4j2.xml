@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn" name="TimeTravel" packages="">
     <Appenders>
-        <File name="appFile" fileName="logs/app.log">
+        <File name="appFile" fileName="logs/timetravel.log">
             <PatternLayout>
                 <Pattern>%d{HH:mm} %p %c{1} %m%n</Pattern>
             </PatternLayout>

@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="http://getbootstrap.com/examples/dashboard/dashboard.css">
@@ -79,7 +78,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
                 <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#" class="glyphicon glyphicon glyphicon-cog">{{messages.settings}}</a></li>
+                        <li><a href="./administration/index.xhtml" class="">{{messages.settings}}</a></li>
                     </ul>
                 </div>
             </div>
@@ -121,7 +120,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             </thead>
                             <tbody>
                                 <tr ng-repeat="e in eventsJson">
-                                    <td>{{e.time}}</td>
+                                    <td>{{e.time.year}} {{e.time.month}} {{e.time.day}}</td>
                                     <td>
                                         {{e.title}}
                                         <a ng-if="e.url != null" classes ="btn btn-default small" href="{{e.url}}" target="_new">Wiki</a>
@@ -134,7 +133,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div class="col-sm-6 col-md-4" ng-repeat="e in eventsJson">
                             <div class="thumbnail">
                                 <div class="caption" style="height: 300px; overflow-y: hidden">
-                                    <h3>{{e.title}}<br><small>{{e.time}}</small></h3>
+                                    <h3>{{e.title}}<br><small>{{e.time.year}} {{e.time.month}} {{e.time.day}}</small></h3>
                                     <div>
                                         <p><img ng-if="e.photo != null" src="{{e.photo}}" width="100" align="right" style="margin-left: 0.5em;"> {{e.description}}</p>
                                     </div>

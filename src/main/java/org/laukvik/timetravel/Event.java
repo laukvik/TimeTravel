@@ -28,13 +28,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -47,7 +48,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Event.findAll", query = "SELECT e FROM Event e")
+    @NamedQuery(name = "Event.findAll", query = "SELECT e FROM Event e ORDER BY e.time.year ASC, e.time.month ASC, e.time.day ASC"),
+    @NamedQuery(name = "Event.removeAll", query = "DELETE FROM Event e")
 })
 @XmlRootElement(name = "event")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -61,10 +63,12 @@ public class Event implements Serializable {
     private int version;
 
     @Embedded
+    @XmlElement(required = true)
     private Time time;
 
     @XmlElement(required = true)
     @Lob
+    @NotNull
     private String title;
 
     @XmlElement(required = true)
@@ -85,11 +89,11 @@ public class Event implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Tag> tags;
 
     public Event() {
-        tags = new ArrayList<Tag>();
+        tags = new ArrayList<>();
     }
 
     public Time getTime() {
