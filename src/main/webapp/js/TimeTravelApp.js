@@ -31,9 +31,13 @@ angular.module("timeTravelApp", [])
             var ERAS_URL_JSON = "json/eras.json";
             var ERAS_URL_REST = "webresources/events/finderas";
 
+            var COLL_URL_JSON = "json/collections.json";
+            var COLL_URL_REST = "webresources/events/findcollections";
+
             var EVENTS_URL = $scope.developerMode ? EVENTS_URL_JSON : EVENTS_URL_REST;
             var TAGS_URL = $scope.developerMode ? TAGS_URL_JSON : TAGS_URL_REST;
             var ERAS_URL = $scope.developerMode ? ERAS_URL_JSON : ERAS_URL_REST;
+            var COLL_URL = $scope.developerMode ? COLL_URL_JSON : COLL_URL_REST;
 
 
             $scope.selectTag = function (tag, item) {
@@ -64,5 +68,9 @@ angular.module("timeTravelApp", [])
             $http.get(ERAS_URL)
                     .then(function (res) {
                         $scope.erasJson = res.data;
+                    });
+            $http.get(COLL_URL)
+                    .then(function (res) {
+                        $scope.collectionsJson = res.data;
                     });
         });

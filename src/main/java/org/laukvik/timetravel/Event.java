@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,6 +34,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -49,7 +52,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Event.findAll", query = "SELECT e FROM Event e ORDER BY e.time.year ASC, e.time.month ASC, e.time.day ASC"),
-    @NamedQuery(name = "Event.removeAll", query = "DELETE FROM Event e")
+    @NamedQuery(name = "Event.removeAll", query = "DELETE FROM Event e"),
+    @NamedQuery(name = "Event.findByTag", query = "SELECT e FROM Event e JOIN e.metas m WHERE m.tag IN :tags"),
+    @NamedQuery(name = "Event.findInEra", query = "SELECT e FROM Event e WHERE e.time.year BETWEEN :from AND :to ORDER BY e.time.year ASC, e.time.month ASC, e.time.day ASC"),
+    @NamedQuery(name = "Event.findByTagInEra", query = "SELECT e FROM Event e JOIN e.metas m WHERE m.tag IN :tags AND e.time.year BETWEEN :from AND :to  ORDER BY e.time.year ASC, e.time.month ASC, e.time.day ASC")
 })
 @XmlRootElement(name = "event")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -59,6 +65,7 @@ public class Event implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @XmlTransient
     @Version
     private int version;
 
@@ -72,7 +79,9 @@ public class Event implements Serializable {
     private String title;
 
     @XmlElement(required = true)
+//    @XmlTransient
     @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String description;
 
     @XmlElement(required = true)
@@ -83,17 +92,39 @@ public class Event implements Serializable {
     @Lob
     private String wiki;
 
+    @XmlTransient
     @ManyToOne
     private User author;
 
+    @XmlTransient
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Tag> tags;
+    @NotNull
+    @ManyToOne
+    private EventCollection collection;
+
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "event")
+    private List<Meta> metas;
 
     public Event() {
-        tags = new ArrayList<>();
+        metas = new ArrayList<>();
+    }
+
+    public List<Meta> getMetas() {
+        return metas;
+    }
+
+    public void addMeta(Tag tag) {
+        Meta m = new Meta();
+        m.setEvent(this);
+        m.setTag(tag);
+        metas.add(m);
+    }
+
+    @PrePersist
+    private void beforeSave() {
+        this.created = new Date();
     }
 
     public Time getTime() {
@@ -136,14 +167,6 @@ public class Event implements Serializable {
         this.created = created;
     }
 
-    @XmlTransient
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
 
     @Override
     public int hashCode() {
@@ -182,6 +205,21 @@ public class Event implements Serializable {
     public void setWiki(String wiki) {
         this.wiki = wiki;
     }
+
+    public EventCollection getCollection() {
+        return collection;
+    }
+
+    public void setCollection(EventCollection collection) {
+        this.collection = collection;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Event{" + "id=" + id + ", time=" + time + ", title=" + title + ", wiki=" + wiki + '}';
+    }
+
 
 
 }

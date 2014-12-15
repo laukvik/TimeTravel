@@ -40,16 +40,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <span class="icon-bar"></span>
                     </button>
 
-                    <div style="display: block; margin: 0px;" class="navbar-toggle  collapsed">
-                        <form class="form-inline" role="form">
-                            <div class="form-group">
+                    <div style="display: block; margin: 0px; float: right;" class="navbar-toggle  collapsed">
+                        <form class="form-inline" role="form" style="">
+                            <div class="form-group" style="display:none;">
                                 <div class="input-group">
                                     <span class="input-group-addon" style="width: 4em;">{{messages.time_from}}</span>
                                     <label class="sr-only" for="exampleInputEmail2">yyyy</label>
                                     <input type="number" class="form-control" id="exampleInputEmail2"  placeholder="{{messages.year}}" ng-model="eventFromYear">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="display:none;">
                                 <div class="input-group">
                                     <span class="input-group-addon" style="width: 4em;">{{messages.time_to}}</span>
                                     <label class="sr-only" for="exampleInputPassword2">yyyy</label>

@@ -39,17 +39,32 @@
             <h:form id="form1" enctype="multipart/form-data">
 
                 <div class="form-group">
-                    <label for="file1">Tags</label>
-                    <h:inputFile class="form-control" required="true" id="file1" value="#{administrationBean.file}" validator="#{administrationBean.validateExcelFile}"/>
+                    <label for="tagFile">Tags (Europe.xlsx)</label>
+                    <h:inputFile class="form-control" required="true" id="tagFile" value="#{administrationBean.file}" validator="#{administrationBean.validateTagsFile}"/>
+
+                    <label for="tagTitle">Tittel</label>
+                    <h:inputText id="tagTitle" value="#{administrationBean.collectionTitle}" required="false"/>
+
+                    <label for="tagWiki">Wikipedia</label>
+                    <h:inputText id="tagWiki" value="#{administrationBean.collectionWiki}" required="false"/>
+
                     <h:commandButton class="btn btn-primary" value="Upload" action="#{administrationBean.uploadTags}"/>
-                    <h:messages />
+                    <h:messages/>
                 </div>
             </h:form>
 
             <h:form id="form2" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="file2">Events</label>
-                    <h:inputFile class="form-control" required="true" id="file2" value="#{administrationBean.file}" validator="#{administrationBean.validateExcelFile}"/>
+                    <label for="eventFile">Events (List_of_Presidents_of_the_United_States.xlsx)</label>
+                    <h:inputFile class="form-control" required="true" id="eventFile" value="#{administrationBean.file}"
+                                 validator="#{administrationBean.validateEventsFile}"/>
+
+                    <label for="eventTitle">Tittel</label>
+                    <h:inputText id="eventTitle" value="#{administrationBean.collectionTitle}" required="false"/>
+
+                    <label for="eventWiki">Wikipedia</label>
+                    <h:inputText id="eventWiki" value="#{administrationBean.collectionWiki}" required="false"/>
+
                     <h:commandButton class="btn btn-primary" value="Upload" action="#{administrationBean.uploadEvents}"/>
                     <h:messages />
                 </div>
@@ -57,8 +72,15 @@
 
             <h:form id="form3" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="file2">Eras</label>
-                    <h:inputFile class="form-control" required="true" id="file3" value="#{administrationBean.file}" validator="#{administrationBean.validateExcelFile}"/>
+                    <label for="eraFile">Eras (Era_(geology))</label>
+                    <h:inputFile class="form-control" required="true" id="eraFile" value="#{administrationBean.file}" validator="#{administrationBean.validateEraFile}"/>
+
+                    <label for="eraTitle">Tittel</label>
+                    <h:inputText id="eraTitle" value="#{administrationBean.collectionTitle}" required="false"/>
+
+                    <label for="eraWiki">Wikipedia</label>
+                    <h:inputText id="eraWiki" value="#{administrationBean.collectionWiki}" required="false"/>
+
                     <h:commandButton class="btn btn-primary" value="Upload" action="#{administrationBean.uploadEras()}"/>
                     <h:messages />
                 </div>

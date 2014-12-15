@@ -17,10 +17,10 @@
 package org.laukvik.timetravel;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,10 +28,11 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "Tag.findByTitle", query = "SELECT t FROM Tag t WHERE t.title = :title"),
     @NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t ORDER BY t.title ASC"),
     @NamedQuery(name = "Tag.removeAll", query = "DELETE FROM Tag t")
 })
@@ -49,9 +51,15 @@ public class Tag implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @XmlTransient
     @Version
     private int version;
 
+    @NotNull
+    @ManyToOne
+    private TagCollection collection;
+
+    @XmlTransient
     @ManyToOne
     private User author;
 
@@ -59,10 +67,18 @@ public class Tag implements Serializable {
     private String title;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private String description;
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.REMOVE)
-    List<Event> events;
+    @Lob
+    private String wiki;
+
+    @XmlElement(required = true)
+    @Lob
+    private String photo;
+
+//    @OneToMany(orphanRemoval = true, cascade = CascadeType.REMOVE)
+//    List<Event> events;
 
 
     public Tag() {
@@ -119,7 +135,35 @@ public class Tag implements Serializable {
         this.description = description;
     }
 
+    public String getWiki() {
+        return wiki;
+    }
 
+    public void setWiki(String wiki) {
+        this.wiki = wiki;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public TagCollection getCollection() {
+        return collection;
+    }
+
+    public void setCollection(TagCollection collection) {
+        this.collection = collection;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Tag{" + "id=" + id + ", title=" + title + ", wiki=" + wiki + '}';
+    }
 
 
 }

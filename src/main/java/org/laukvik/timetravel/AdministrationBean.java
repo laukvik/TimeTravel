@@ -16,6 +16,7 @@
  */
 package org.laukvik.timetravel;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,9 @@ public class AdministrationBean implements Serializable {
     String password;
     Long userid;
 
+    String collectionTitle;
+    String collectionWiki;
+
     private Part file;
 
     /**
@@ -53,42 +57,95 @@ public class AdministrationBean implements Serializable {
     public AdministrationBean() {
     }
 
+
     public String uploadTags() {
-        try {
-            srv.importTags(file.getInputStream());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return "tags?faces-redirect=true";
     }
 
-    public String uploadEvents() {
-        try {
-            srv.importEvents(file.getInputStream());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "events?faces-redirect=true";
-    }
-
-    public String uploadEras() {
-        try {
-            srv.importEras(file.getInputStream());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "eras?faces-redirect=true";
-    }
-
-    public void validateExcelFile(FacesContext ctx, UIComponent comp, Object value) {
-        List<FacesMessage> msgs = new ArrayList<FacesMessage>();
-        Part file = (Part) value;
+    public void validateTagsFile(FacesContext ctx, UIComponent comp, Object value) {
+        List<FacesMessage> msgs = new ArrayList<>();
+        file = (Part) value;
         if (file.getSize() > 1024000000) {
             msgs.add(new FacesMessage("file too big"));
         }
-//        if (!"application/ms-excel".equals(file.getContentType())) {
-//            msgs.add(new FacesMessage("not a text file"));
-//        }
+        try {
+            if (collectionTitle == null || collectionTitle.isEmpty()) {
+                collectionTitle = getFileName();
+            }
+            srv.importTags(file.getInputStream(), collectionTitle, collectionWiki);
+        } catch (ImportFailedException ex) {
+            ex.printStackTrace();
+            msgs.add(new FacesMessage(ex.getMessage()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            msgs.add(new FacesMessage("Could not read tag file!"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            msgs.add(new FacesMessage("Could not read tag file!"));
+        }
+        if (!msgs.isEmpty()) {
+            throw new ValidatorException(msgs);
+        }
+    }
+
+    public String uploadEvents() {
+        return "events?faces-redirect=true";
+    }
+
+    public void validateEventsFile(FacesContext ctx, UIComponent comp, Object value) {
+        List<FacesMessage> msgs = new ArrayList<>();
+        file = (Part) value;
+        if (file.getSize() > 1024000000) {
+            msgs.add(new FacesMessage("file too big"));
+        }
+        try {
+            if (collectionTitle == null || collectionTitle.isEmpty()) {
+                collectionTitle = getFileName();
+            }
+            srv.importEvents(file.getInputStream(), collectionTitle, collectionWiki);
+        } catch (ImportFailedException ex) {
+            ex.printStackTrace();
+            msgs.add(new FacesMessage(ex.getMessage()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            msgs.add(new FacesMessage("Could not read eras file!"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            msgs.add(new FacesMessage(ex.getMessage()));
+        }
+        if (!msgs.isEmpty()) {
+            throw new ValidatorException(msgs);
+        }
+    }
+
+    public String uploadEras() {
+        return "eras?faces-redirect=true";
+    }
+
+    public void validateEraFile(FacesContext ctx, UIComponent comp, Object value) {
+        List<FacesMessage> msgs = new ArrayList<>();
+        file = (Part) value;
+        if (file.getSize() > 1024000000) {
+            msgs.add(new FacesMessage("file too big"));
+        }
+        if (collectionTitle == null || collectionTitle.isEmpty()) {
+            collectionTitle = getFileName();
+        }
+        try {
+            srv.importEras(file.getInputStream(), collectionTitle, collectionWiki);
+        } catch (MissingColumnException ex) {
+            ex.printStackTrace();
+            msgs.add(new FacesMessage(ex.getMessage()));
+        } catch (ImportFailedException ex) {
+            ex.printStackTrace();
+            msgs.add(new FacesMessage(ex.getMessage()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            msgs.add(new FacesMessage("Could not read eras file!"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            msgs.add(new FacesMessage(ex.getMessage()));
+        }
         if (!msgs.isEmpty()) {
             throw new ValidatorException(msgs);
         }
@@ -108,19 +165,64 @@ public class AdministrationBean implements Serializable {
     }
 
     public String createUser() {
-        User u = srv.createUser(username, password, UserType.MASTER);
-        Tag t1 = srv.createTag("Bhuddism");
-        Tag t2 = srv.createTag("Christianity");
-        Tag t3 = srv.createTag("Hinduism");
-        Tag t4 = srv.createTag("Islam");
-
-        Era e1 = srv.createEra("Classical antiquity", -700, 600);
-        Era e2 = srv.createEra("Middle Ages", 500, 1000);
-        Era e3 = srv.createEra("Early modern period", 1450, 1750);
-
-        Event ev1 = srv.createEvent("Robert Dinwiddie", Time.year(1693), "Robert Dinwiddie (1693 – 27 July 1770) was a British colonial administrator who served as lieutenant governor of colonial Virginia from 1751 to 1758, first under Governor Willem Anne van Keppel, 2nd Earl of Albemarle, and then, from July 1756 to January 1758, as deputy for John Campbell, 4th Earl of Loudoun. Since the governors at that time were largely absentee, he was the de facto.", t1);
+//        User u = srv.createUser(username, password, UserType.MASTER);
+//        Tag t1 = srv.createTag("Bhuddism");
+//        Tag t2 = srv.createTag("Christianity");
+//        Tag t3 = srv.createTag("Hinduism");
+//        Tag t4 = srv.createTag("Islam");
+//
+//        Era e1 = srv.createEra("Classical antiquity", -700, 600);
+//        Era e2 = srv.createEra("Middle Ages", 500, 1000);
+//        Era e3 = srv.createEra("Early modern period", 1450, 1750);
+//
+//        Event ev1 = srv.createEvent("Robert Dinwiddie", Time.year(1693), "Robert Dinwiddie (1693 – 27 July 1770) was a British colonial administrator who served as lieutenant governor of colonial Virginia from 1751 to 1758, first under Governor Willem Anne van Keppel, 2nd Earl of Albemarle, and then, from July 1756 to January 1758, as deputy for John Campbell, 4th Earl of Loudoun. Since the governors at that time were largely absentee, he was the de facto.", t1);
 
         return "./administration/?faces-redirect=true";
+    }
+
+// Extract file name from content-disposition header of file part
+    private String getFileName() {
+        final String partHeader = file.getHeader("content-disposition");
+//        System.out.println("***** partHeader: " + partHeader);
+        for (String content : file.getHeader("content-disposition").split(";")) {
+            if (content.trim().startsWith("filename")) {
+                return content.substring(content.indexOf('=') + 1).trim()
+                        .replace("\"", "");
+            }
+        }
+        return null;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getCollectionTitle() {
+        return collectionTitle;
+    }
+
+    public void setCollectionTitle(String collectionTitle) {
+        this.collectionTitle = collectionTitle;
+    }
+
+    public String getCollectionWiki() {
+        return collectionWiki;
+    }
+
+    public void setCollectionWiki(String collectionWiki) {
+        this.collectionWiki = collectionWiki;
     }
 
 }

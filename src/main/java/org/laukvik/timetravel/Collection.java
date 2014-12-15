@@ -32,6 +32,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,28 +41,28 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Era.findAll", query = "SELECT e FROM Era e ORDER BY e.title ASC"),
-    @NamedQuery(name = "Era.removeAll", query = "DELETE FROM Era e")
+    @NamedQuery(name = "Collection.findAll", query = "SELECT c FROM Collection c ORDER BY c.title ASC"),
+    @NamedQuery(name = "Collection.removeAll", query = "DELETE FROM Collection c")
 })
-public class Era implements Serializable {
+public abstract class Collection implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @XmlTransient
     @Version
     private int version;
 
-    private long fromYear;
-    private long toYear;
+    @XmlTransient
+    @ManyToOne
+    private User author;
 
-    @XmlElement(required = true)
-    @Lob
     @NotNull
     private String title;
 
-    @Basic(fetch = FetchType.LAZY)
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private String description;
 
     @Lob
@@ -71,24 +72,23 @@ public class Era implements Serializable {
     @Lob
     private String photo;
 
-    @NotNull
-    @ManyToOne
-    private EraCollection collection;
+    @XmlElement(required = true)
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private String background;
 
-    public Era() {
+    @XmlElement(required = true)
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private String html;
+
+    public Collection() {
     }
-
-    public Era(String title, long fromYear, long toYear) {
-        this.fromYear = fromYear;
-        this.toYear = toYear;
-        this.title = title;
-    }
-
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.id);
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -100,35 +100,19 @@ public class Era implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Era other = (Era) obj;
+        final Collection other = (Collection) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
 
-    public int getVersion() {
-        return version;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public long getFromYear() {
-        return fromYear;
-    }
-
-    public void setFromYear(long fromYear) {
-        this.fromYear = fromYear;
-    }
-
-    public long getToYear() {
-        return toYear;
-    }
-
-    public void setToYear(long toYear) {
-        this.toYear = toYear;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public String getTitle() {
@@ -163,18 +147,27 @@ public class Era implements Serializable {
         this.photo = photo;
     }
 
-    public EraCollection getCollection() {
-        return collection;
-    }
-
-    public void setCollection(EraCollection collection) {
-        this.collection = collection;
-    }
-
     @Override
     public String toString() {
-        return "Era{" + "id=" + id + ", fromYear=" + fromYear + ", toYear=" + toYear + ", title=" + title + ", collection=" + collection + '}';
+        return "Collection{" + "id=" + id + ", title=" + title + ", wiki=" + wiki + '}';
     }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
+    public String getHtml() {
+        return html;
+    }
+
+    public void setHtml(String html) {
+        this.html = html;
+    }
+
 
 
 

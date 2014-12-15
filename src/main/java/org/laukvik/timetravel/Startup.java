@@ -36,8 +36,8 @@ public class Startup implements Serializable {
 
     @PostConstruct
     void open() {
-        System.out.println("STARTING SINGLETON!!!!!!!");
-        srv.removeEverything();
+//        System.out.println("STARTING SINGLETON!!!!!!!");
+//        srv.removeEverything();
 //        User u = srv.createUser("morten@laukvik.no", "123", UserType.MASTER);
 //        Tag t1 = srv.createTag("Bhuddism");
 //        Tag t2 = srv.createTag("Christianity");

@@ -58,24 +58,6 @@ public class RestBean implements Serializable {
     @Produces({"application/json"})
     public List<Event> findEvents() {
         return srv.findEvents();
-//        List<Event> items = new ArrayList<>();
-//        {
-//            Event evt = new Event();
-//            evt.setTime(Time.year(1972));
-//            evt.setTitle("Mattress");
-//            evt.setDescription("Queen size mattress");
-//            evt.setPhoto("http://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Robert_Dinwiddie_from_NPG.jpg/600px-Robert_Dinwiddie_from_NPG.jpg");
-//            items.add(evt);
-//        }
-//        {
-//            Event evt = new Event();
-//            evt.setTime(Time.year(2005));
-//            evt.setTitle("Mattress");
-//            evt.setDescription("Queen size mattress");
-//            evt.setPhoto("http://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg/440px-Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg");
-//            items.add(evt);
-//        }
-//        return items;
     }
 
     @GET
@@ -83,18 +65,6 @@ public class RestBean implements Serializable {
     @Produces({"application/json"})
     public List<Tag> findTags() {
         return srv.findTags();
-//        List<Tag> items = new ArrayList<>();
-//        {
-//            Tag evt = new Tag();
-//            evt.setTitle("Mattress");
-//            items.add(evt);
-//        }
-//        {
-//            Tag evt = new Tag();
-//            evt.setTitle("Mattress");
-//            items.add(evt);
-//        }
-//        return items;
     }
 
     @GET
@@ -102,18 +72,13 @@ public class RestBean implements Serializable {
     @Produces({"application/json"})
     public List<Era> findEras() {
         return srv.findEras();
-//        List<Era> items = new ArrayList<>();
-//        {
-//            Era evt = new Era();
-//            evt.setTitle("Mattress");
-//            items.add(evt);
-//        }
-//        {
-//            Era evt = new Era();
-//            evt.setTitle("Mattress");
-//            items.add(evt);
-//        }
-//        return items;
+    }
+
+    @GET
+    @Path("/findcollections")
+    @Produces({"application/json"})
+    public List<org.laukvik.timetravel.Collection> findCollections() {
+        return srv.findCollections();
     }
 
 }
