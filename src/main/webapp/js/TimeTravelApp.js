@@ -14,13 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-angular.module("timeTravelApp", [])
+angular.module("timeTravelApp", ['ui.bootstrap'])
         .controller('timeController', function ($scope, $http) {
             $scope.eventFromYear = null;
             $scope.eventToYear = null;
             $scope.eventViewMode = 1;
             $scope.selectedTags = null;
-            $scope.developerMode = false;
+            $scope.developerMode = true;
+
+            $scope.radioModel = "Left";
 
             var EVENTS_URL_JSON = "json/events.json";
             var EVENTS_URL_REST = "webresources/events/findevents";
@@ -34,11 +36,14 @@ angular.module("timeTravelApp", [])
             var COLL_URL_JSON = "json/collections.json";
             var COLL_URL_REST = "webresources/events/findcollections";
 
+            var TIMELINES_URL_JSON = "json/timelines.json";
+            var TIMELINES_URL_REST = "webresources/events/findtimelines";
+
             var EVENTS_URL = $scope.developerMode ? EVENTS_URL_JSON : EVENTS_URL_REST;
             var TAGS_URL = $scope.developerMode ? TAGS_URL_JSON : TAGS_URL_REST;
             var ERAS_URL = $scope.developerMode ? ERAS_URL_JSON : ERAS_URL_REST;
             var COLL_URL = $scope.developerMode ? COLL_URL_JSON : COLL_URL_REST;
-
+            var TIMELINES_URL = $scope.developerMode ? TIMELINES_URL_JSON : TIMELINES_URL_REST;
 
             $scope.selectTag = function (tag, item) {
 //                item.className += " active";
@@ -72,5 +77,9 @@ angular.module("timeTravelApp", [])
             $http.get(COLL_URL)
                     .then(function (res) {
                         $scope.collectionsJson = res.data;
+                    });
+            $http.get(TIMELINES_URL)
+                    .then(function (res) {
+                        $scope.timelinesJson = res.data;
                     });
         });

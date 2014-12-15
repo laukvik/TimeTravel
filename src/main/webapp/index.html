@@ -27,11 +27,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <link rel="stylesheet" href="http://getbootstrap.com/examples/dashboard/dashboard.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+        <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
+        <script src="http://m-e-conroy.github.io/angular-dialog-service/javascripts/dialogs.min.js" type="text/javascript"></script>
+        <style>
+            /* Fix for Bootstrap 3 with Angular UI Bootstrap */
+
+            .modal {
+                display: block;
+            }
+
+            /* Custom dialog/modal headers */
+
+            .dialog-header-error { background-color: #d2322d; }
+            .dialog-header-wait { background-color: #428bca; }
+            .dialog-header-notify { background-color: #eeeeee; }
+            .dialog-header-confirm { background-color: #333333; }
+            .dialog-header-error span, .dialog-header-error h4,
+            .dialog-header-wait span, .dialog-header-wait h4,
+            .dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+
+            /* Ease Display */
+
+            .pad { padding: 25px; }
+        </style>
     </head>
     <body ng-app="timeTravelApp" ng-controller="timeController">
 
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"  aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -39,106 +62,52 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-
-                    <div style="display: block; margin: 0px; float: right;" class="navbar-toggle  collapsed">
-                        <form class="form-inline" role="form" style="">
-                            <div class="form-group" style="display:none;">
-                                <div class="input-group">
-                                    <span class="input-group-addon" style="width: 4em;">{{messages.time_from}}</span>
-                                    <label class="sr-only" for="exampleInputEmail2">yyyy</label>
-                                    <input type="number" class="form-control" id="exampleInputEmail2"  placeholder="{{messages.year}}" ng-model="eventFromYear">
-                                </div>
-                            </div>
-                            <div class="form-group" style="display:none;">
-                                <div class="input-group">
-                                    <span class="input-group-addon" style="width: 4em;">{{messages.time_to}}</span>
-                                    <label class="sr-only" for="exampleInputPassword2">yyyy</label>
-                                    <input type="number" class="form-control" id="exampleInputPassword2" placeholder="{{messages.year}}" ng-model="eventToYear">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="btn-group" role="group" aria-label="..." style="color: white;">
-                                        <div class="radio">
-                                            <label><input type="radio" ng-model="eventViewMode" name="eventViewMode" value="0">
-                                                <span class="glyphicon glyphicon-th-list"></span>
-                                                {{messages.event_view_mode_list}}</label>
-                                        </div>
-                                        <div class="radio">
-                                            <label><input type="radio" ng-model="eventViewMode" name="eventViewMode" value="1">
-                                                <span class="glyphicon glyphicon-th"></span>
-                                                {{messages.event_view_mode_poster}}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="navbar-brand" style="">TimeTravel</div>
+                    <a class="navbar-brand" href="./">TimeTravel</a>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="./administration/index.xhtml" class="">{{messages.settings}}</a></li>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown closed">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Timelines <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-repeat="timeline in timelinesJson"><a href="#">{{timeline.title}}</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown closed">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Topic <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-repeat="tag in tagsJson"><a href="#">{{tag.title}}</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown closed">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">{{messages.event_view_mode}} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-model="eventViewMode" btn-radio="0"><a href="#">{{messages.event_view_mode_list}}</a></li>
+                                <li ng-model="eventViewMode" btn-radio="1"><a href="#">{{messages.event_view_mode_poster}}</a></li>
+                            </ul>
+                        </li>
                     </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+            <div class="" style="color: white; background-color: darkgrey;">
+
+                <div align="center">
+                    <div class="btn-group">
+                        <label ng-repeat="c in collectionsJson" class="btn" ng-model="radioModel" btn-radio="{{c.id}}">{{c.title}}</label>
+                    </div>
                 </div>
+
             </div>
         </nav>
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3 col-md-2 sidebar">
-                    <form  role="form">
-                        <div class="form-group">
-                            <h4>{{messages.tag}}</h4>
-                            <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="tag in tagsJson" ng-click="selectTag(tag, this)">
-                                    <span class="badge">{{tag.count}}</span>
-                                    <span>{{tag.title}}</span>
-                                </li>
-                            </ul>
 
 
-                            <h4>{{messages.era}}</h4>
-                            <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="era in erasJson" ng-click="selectEra(era, this)">
-                                    <span class="badge">{{era.count}}</span>
-                                    <span>{{era.title}}</span>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </form>
-                </div>
-                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <div class="table-responsive" ng-if="eventViewMode == 0">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th style="width: 10em;">{{messages.event_time}}</th>
-                                    <th>{{messages.event_title}}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="e in eventsJson">
-                                    <td>{{e.time.year}} {{e.time.month}} {{e.time.day}}</td>
-                                    <td>
-                                        {{e.title}}
-                                        <a ng-if="e.url != null" classes ="btn btn-default small" href="{{e.url}}" target="_new">Wiki</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row" ng-if="eventViewMode == 1">
-                        <div class="col-sm-6 col-md-4" ng-repeat="e in eventsJson">
-                            <div class="thumbnail">
-                                <div class="caption" style="height: 300px; overflow-y: hidden">
-                                    <h3>{{e.title}}<br><small>{{e.time.year}} {{e.time.month}} {{e.time.day}}</small></h3>
-                                    <div>
-                                        <p><img ng-if="e.photo != null" src="{{e.photo}}" width="100" align="right" style="margin-left: 0.5em;"> {{e.description}}</p>
-                                    </div>
-                                </div>
-                            </div>
+        <div style="margin-top: 40px;">
+            <div class="col-sm-6 col-md-4" ng-repeat="e in eventsJson">
+                <div class="thumbnail">
+                    <div class="caption" style="height: 300px; overflow-y: hidden">
+                        <h3>{{e.title}}<br><small>{{e.time.year}} {{e.time.month}} {{e.time.day}}</small></h3>
+                        <div>
+                            <p><img ng-if="e.photo != null" src="{{e.photo}}" width="100" align="right" style="margin-left: 0.5em;"> {{e.description}}</p>
                         </div>
                     </div>
                 </div>
